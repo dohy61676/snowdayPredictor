@@ -10,10 +10,10 @@ public class mainDriver {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		settingInput();
 	}
 	
-	public void settingInput() {
+	public static void settingInput() {
 		//Setting day, year, and month
 		Scanner reader = new Scanner(System.in);
 		
