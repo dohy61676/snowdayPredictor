@@ -3,6 +3,7 @@ package snowdayPredictor;
 import java.util.Scanner;
 
 public class mainDriverV2 {
+	
 	/** Variables */
 	//Points
 	static int totalPoints;
@@ -20,6 +21,10 @@ public class mainDriverV2 {
 	static int stateTesting;
 	static int prevSnow;	
 	static int monthRatioPoints;
+	
+	//Array
+	//Format goes [month] [snowdays]
+	static int[][] smA = new int[4][3];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -158,10 +163,6 @@ public class mainDriverV2 {
 	
 	//Stores chart for values
 	private static void monthsnowArray() {
-		//Format goes [month] [snowdays]
-		int[][] smA = new int[4][3];
-		
-		/**Filling in values*/
 		//Nov
 		smA[0][0] = 15;
 		smA[0][1] = 10;
@@ -187,12 +188,9 @@ public class mainDriverV2 {
 		smA[4][1] = 10;
 		smA[4][2] = 6;
 		smA[4][3] = 4;
-		
 		if((prevSnow>=4) || (prevSnow<0)) {
 			System.exit(0);
 		}
-		else {
-			msnScore = smA[transMonth][prevSnow];
-		}
+		msnScore = smA[transMonth][prevSnow];
 	}
 }
