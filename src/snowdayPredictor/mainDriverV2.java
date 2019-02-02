@@ -6,11 +6,13 @@ public class mainDriverV2 {
 	/** Variables */
 	//Points
 	static int totalPoints;
+	static int msnScore;
 	
 	//Date
 	static int day;
 	static int year;
 	static int month;
+	static int transMonth;
 	
 	//Conditions
 	static int proxBreak;
@@ -18,14 +20,12 @@ public class mainDriverV2 {
 	static int stateTesting;
 	static int prevSnow;	
 	static int monthRatioPoints;
-	
-	//Other
-	static int errorCode;
-	static int monthTranslator = 0;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		initialInput();
+		mainpointHandler();
+		System.out.println(totalPoints);
 	}
 	
 	public static void initialInput() {
@@ -68,7 +68,9 @@ public class mainDriverV2 {
 		//N2
 		N2();
 		//N3
+		N3();
 		//N4
+		N4();
 		//N5
 		//N6
 		//N7
@@ -79,12 +81,13 @@ public class mainDriverV2 {
 	}
 	
 	/**Question Methods*/
+	//N1
 	public static void N1() {
 		if (day==1 || day==5) {
 			totalPoints=totalPoints+1;
 		}
 	}
-	
+	//N2
 	public static void N2() {
 		if (proxBreak==0) {
 			totalPoints=totalPoints+12;
@@ -93,8 +96,103 @@ public class mainDriverV2 {
 			totalPoints=totalPoints+10;
 		}
 	}
-	
+	//N3
 	public static void N3() {
+		monthTranslator();
+		monthsnowArray();
+		//Adding points
+		totalPoints = totalPoints + msnScore;
+	}
+	//N4
+	public static void N4() {
+		if(activitiesCancelled==1) {
+			totalPoints = totalPoints+10;
+		}
+	}
+	//N5
+	public static void N5() {
+		if(stateTesting==1) {
+			totalPoints = totalPoints - 40;
+		}
+	}
+	/**Question Methods dependencies*/
+	//Translates normal month values into those used by (MonthSnow) array
+	public static void monthTranslator() {
+		/**
+		 * Typical values:
+		 * Nov - 11
+		 * Dec - 12
+		 * Jan - 1
+		 * Feb - 2
+		 * Mar - 3
+		 * New Values:
+		 * Nov - 0
+		 * Dec - 1
+		 * Jan - 2
+		 * Feb - 3
+		 * Mar - 4
+		 */
 		
+		/**Actual translation*/
+		//Nov
+		if(month==11) {
+			transMonth=0;
+		}
+		//Dec
+		else if(month==12) {
+			transMonth=1;
+		}
+		//Jan
+		else if(month==1) {
+			transMonth=2;
+		}
+		//Feb
+		else if(month==2) {
+			transMonth=3;
+		}
+		//Mar
+		else if(month==3) {
+			transMonth=4;
+		}
+	}
+	
+	//Stores chart for values
+	private static void monthsnowArray() {
+		//Format goes [month] [snowdays]
+		int[][] smA = new int[4][3];
+		
+		/**Filling in values*/
+		//Nov
+		smA[0][0] = 15;
+		smA[0][1] = 10;
+		smA[0][2] = 5;
+		smA[0][3] = 0;
+		//Dec
+		smA[1][0] = 10;
+		smA[1][1] = 7;
+		smA[1][2] = 3;
+		smA[1][3] = 2;
+		//Jan
+		smA[2][0] = 8;
+		smA[2][1] = 6;
+		smA[2][2] = 3;
+		smA[2][3] = 2;
+		//Feb
+		smA[3][0] = 10;
+		smA[3][1] = 7;
+		smA[3][2] = 5;
+		smA[3][3] = 2;
+		//Mar
+		smA[4][0] = 15;
+		smA[4][1] = 10;
+		smA[4][2] = 6;
+		smA[4][3] = 4;
+		
+		if((prevSnow>=4) || (prevSnow<0)) {
+			System.exit(0);
+		}
+		else {
+			msnScore = smA[transMonth][prevSnow];
+		}
 	}
 }
