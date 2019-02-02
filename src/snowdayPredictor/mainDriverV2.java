@@ -12,6 +12,7 @@ public class mainDriverV2 {
 	//Date
 	static int day;
 	static int month;
+	static int year=2019;
 	static int transMonth;
 	
 	//Conditions
