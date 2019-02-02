@@ -3,14 +3,17 @@ package snowdayPredictor;
 import java.util.Scanner;
 
 public class mainDriver {
+	
 	/** Variables */
 	//Points
-	static int totalPoints;
+	static int totalPoints=0;
+	static int msnScore;
 	
 	//Date
 	static int day;
-	static int year;
 	static int month;
+	static int year=2019;
+	static int transMonth;
 	
 	//Conditions
 	static int proxBreak;
@@ -19,27 +22,23 @@ public class mainDriver {
 	static int prevSnow;	
 	static int monthRatioPoints;
 	
-	//Other
-	static int errorCode;
-	static int monthTranslator = 0;
+	//Array
+	//Format goes [month] [snowdays]
+	static int[][] smA = new int[5][4];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		settingInput();
-		snowmonthChart();
-		System.out.println(monthRatioPoints);
+		initialInput();
+		mainpointHandler();
+		System.out.println(totalPoints);
 	}
 	
-	public static void settingInput() {
+	public static void initialInput() {
 		/** Setting day, year, and month */
 		Scanner reader = new Scanner(System.in);
 		//Day
 		System.out.println("What is the day (in a number(Sunday=0, Saturday=6))?");
 		day = reader.nextInt();
-		
-		//Year
-		System.out.println("What is the year (in a number)?");
-		year = reader.nextInt();
 		
 		//Month
 		System.out.println("What is the month (in a number)?");
@@ -63,95 +62,131 @@ public class mainDriver {
 		prevSnow = reader.nextInt();
 	}
 	
-	//Also does not include snow/month chart
-	public static void pointAdder() {
-		//No 1 - Day of the Week
-		if(day==1 || day==5) {
-			totalPoints = totalPoints + 12;
+	public static void mainpointHandler() {
+		/**Notes correspond with question numbers*/
+		//N1
+		N1();
+		//N2
+		N2();
+		//N3
+		N3();
+		//N4
+		N4();
+		//N5
+		//N6
+		//N7
+		//N8
+		//N9
+		//N10
+		
+	}
+	
+	/**Question Methods*/
+	//N1
+	public static void N1() {
+		if (day==1 || day==5) {
+			totalPoints=totalPoints+12;
 		}
-		//No 2 - Proximity to Break
+	}
+	//N2
+	public static void N2() {
 		if (proxBreak==0) {
-			totalPoints = totalPoints + 12;
+			totalPoints=totalPoints+12;
 		}
 		else if (proxBreak==1) {
-			totalPoints = totalPoints + 10;
+			totalPoints=totalPoints+10;
 		}
-		//No 3 - Month/Snow Day ratio
-		snowmonthChart();
-		
 	}
-	
-	public static void snowmonthChart() {
-		//Month/Snow Day Ratio array
-		int[][] monthsnowRatio = new int[4][3];
-		/** Adding Value to array */
-		//November
-		monthsnowRatio[0][0] = 15;
-		monthsnowRatio[0][1] = 10;
-		monthsnowRatio[0][2] = 5;
-		monthsnowRatio[0][3] = 0;
-		//December
-		monthsnowRatio[1][0] = 10;
-		monthsnowRatio[1][1] = 7;
-		monthsnowRatio[1][2] = 3;
-		monthsnowRatio[1][3] = 2;
-		//January
-		monthsnowRatio[2][8] = 8;
-		monthsnowRatio[2][6] = 6;
-		monthsnowRatio[2][3] = 3;
-		monthsnowRatio[2][2] = 2;
-		//Feburary
-		monthsnowRatio[3][0] = 10;
-		monthsnowRatio[3][1] = 7;
-		monthsnowRatio[3][2] = 5;
-		monthsnowRatio[3][3] = 2;
-		//March
-		monthsnowRatio[4][0] = 15;
-		monthsnowRatio[4][1] = 10;
-		monthsnowRatio[4][2] = 6;
-		monthsnowRatio[4][3] = 4;
-		
-		//Computation
-		monthTranslation();
-		monthsnowRatio[month][day] = monthRatioPoints;
-		
+	//N3
+	public static void N3() {
+		monthTranslator();
+		monthsnowArray();
+		//Adding points
+		totalPoints = totalPoints + msnScore;
 	}
-	
-	public static void monthTranslation() {
-
-		//Translation
+	//N4
+	public static void N4() {
+		if(activitiesCancelled==1) {
+			totalPoints = totalPoints+10;
+		}
+	}
+	//N5
+	public static void N5() {
+		if(stateTesting==1) {
+			totalPoints = totalPoints - 40;
+		}
+	}
+	/**Question Methods dependencies*/
+	//Translates normal month values into those used by (MonthSnow) array
+	public static void monthTranslator() {
 		/**
-		 * November = 0
-		 * December = 1
-		 * January = 2
-		 * February = 3
-		 * March = 4
+		 * Typical values:
+		 * Nov - 11
+		 * Dec - 12
+		 * Jan - 1
+		 * Feb - 2
+		 * Mar - 3
+		 * New Values:
+		 * Nov - 0
+		 * Dec - 1
+		 * Jan - 2
+		 * Feb - 3
+		 * Mar - 4
 		 */
-		if(month!=11 || month!=12 || month!=1 || month!=2 || month!=3) {
+		
+		/**Actual translation*/
+		//Nov
+		if(month==11) {
+			transMonth=0;
+		}
+		//Dec
+		else if(month==12) {
+			transMonth=1;
+		}
+		//Jan
+		else if(month==1) {
+			transMonth=2;
+		}
+		//Feb
+		else if(month==2) {
+			transMonth=3;
+		}
+		//Mar
+		else if(month==3) {
+			transMonth=4;
+		}
+	}
+	
+	//Stores chart for values
+	private static void monthsnowArray() {
+		//Nov
+		smA[0][0] = 15;
+		smA[0][1] = 10;
+		smA[0][2] = 5;
+		smA[0][3] = 0;
+		//Dec
+		smA[1][0] = 10;
+		smA[1][1] = 7;
+		smA[1][2] = 3;
+		smA[1][3] = 2;
+		//Jan
+		smA[2][0] = 8;
+		smA[2][1] = 6;
+		smA[2][2] = 3;
+		smA[2][3] = 2;
+		//Feb
+		smA[3][0] = 10;
+		smA[3][1] = 7;
+		smA[3][2] = 5;
+		smA[3][3] = 2;
+		//Mar
+		smA[4][0] = 15;
+		smA[4][1] = 10;
+		smA[4][2] = 6;
+		smA[4][3] = 4;
+		if((prevSnow>=4) || (prevSnow<0)) {
 			System.exit(0);
 		}
-		//November
-		else if(month==11) {
-			monthTranslator = 0;
-		}
-		//December
-		else if (month==12) {
-			monthTranslator = 1;
-		}
-		//Janurary
-		else if (month==1) {
-			monthTranslator = 2;
-		}
-		//Feburary
-		else if (month==2) {
-			monthTranslator = 3;
-		}
-		//March
-		else if (month==3) {
-			monthTranslator = 4;
-		}
-		
-		month = monthTranslator;
+		msnScore = smA[transMonth][prevSnow];
 	}
-
 }
