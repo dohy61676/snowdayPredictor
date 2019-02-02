@@ -24,7 +24,7 @@ public class mainDriverV2 {
 	
 	//Array
 	//Format goes [month] [snowdays]
-	static int[][] smA = new int[4][3];
+	static int[][] smA = new int[5][4];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -163,6 +163,15 @@ public class mainDriverV2 {
 	
 	//Stores chart for values
 	private static void monthsnowArray() {
+		System.out.print(transMonth);
+		System.out.print(" ");
+		System.out.print(prevSnow);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Nov
 		smA[0][0] = 15;
 		smA[0][1] = 10;
