@@ -6,12 +6,11 @@ public class mainDriverV2 {
 	
 	/** Variables */
 	//Points
-	static int totalPoints;
+	static int totalPoints=0;
 	static int msnScore;
 	
 	//Date
 	static int day;
-	static int year;
 	static int month;
 	static int transMonth;
 	
@@ -39,10 +38,6 @@ public class mainDriverV2 {
 		//Day
 		System.out.println("What is the day (in a number(Sunday=0, Saturday=6))?");
 		day = reader.nextInt();
-		
-		//Year
-		System.out.println("What is the year (in a number)?");
-		year = reader.nextInt();
 		
 		//Month
 		System.out.println("What is the month (in a number)?");
@@ -89,7 +84,7 @@ public class mainDriverV2 {
 	//N1
 	public static void N1() {
 		if (day==1 || day==5) {
-			totalPoints=totalPoints+1;
+			totalPoints=totalPoints+12;
 		}
 	}
 	//N2
@@ -163,15 +158,6 @@ public class mainDriverV2 {
 	
 	//Stores chart for values
 	private static void monthsnowArray() {
-		System.out.print(transMonth);
-		System.out.print(" ");
-		System.out.print(prevSnow);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		//Nov
 		smA[0][0] = 15;
 		smA[0][1] = 10;
